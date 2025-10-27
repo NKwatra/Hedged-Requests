@@ -88,13 +88,13 @@ The following load tests were run using `k6`:
 **Screenshots:**
 
 _Standard_
-![Standard](screenshots/standard.png)
+![Standard](screenshots/Standard.png)
 
 _Hedged_
-![Hedged](screenshots/hedged.png)
+![Hedged](screenshots/Hedged.png)
 
 _Tied_
-![Tied](screenshots/tied.png)
+![Tied](screenshots/Tied.png)
 
 ---
 
