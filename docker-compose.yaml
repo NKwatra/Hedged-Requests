@@ -1,0 +1,71 @@
+services:
+  service-a:
+    build:
+      context: .
+      dockerfile: Dockerfile.service
+    image: hedged-service:latest
+    container_name: hedged-service-a
+    environment:
+      - NODE_ENV=production
+      - SERVICE_NAME=A
+      - PORT=8081
+  service-a2:
+    image: hedged-service:latest
+    container_name: hedged-service-a2
+    environment:
+      - NODE_ENV=production
+      - SERVICE_NAME=A_Backup
+      - PORT=8082
+  service-b:
+    image: hedged-service:latest
+    container_name: hedged-service-b
+    environment:
+      - NODE_ENV=production
+      - SERVICE_NAME=B
+      - PORT=8083
+  service-b2:
+    image: hedged-service:latest
+    container_name: hedged-service-b2
+    environment:
+      - NODE_ENV=production
+      - SERVICE_NAME=B_Backup
+      - PORT=8084
+  service-c:
+    image: hedged-service:latest
+    container_name: hedged-service-c
+    environment:
+      - NODE_ENV=production
+      - SERVICE_NAME=C
+      - PORT=8085
+  service-c2:
+    image: hedged-service:latest
+    container_name: hedged-service-c2
+    environment:
+      - NODE_ENV=production
+      - SERVICE_NAME=C_Backup
+      - PORT=8086
+  aggregator:
+    build:
+      context: .
+      dockerfile: Dockerfile.aggregator
+    image: hedged-agg:latest
+    container_name: hedged-agg
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - MODE=${MODE:-hedged}
+      - PORT=3000
+      - SERVICE_A=http://service-a:8081
+      - SERVICE_A2=http://service-a2:8082
+      - SERVICE_B=http://service-b:8083
+      - SERVICE_B2=http://service-b2:8084
+      - SERVICE_C=http://service-c:8085
+      - SERVICE_C2=http://service-c2:8086
+    depends_on:
+      - service-a
+      - service-a2
+      - service-b
+      - service-b2
+      - service-c
+      - service-c2
